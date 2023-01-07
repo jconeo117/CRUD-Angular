@@ -1,1 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
+body{
+    background: #bdc3c7;  /* fallback for old browsers */
+    background: #c9c8c8;  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #c9c8c8, #c9c8c8); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.modal {
+    display: block; /* Mostrar el modal como bloque */
+    position: fixed; /* Fijar la posición del modal */
+    z-index: 1; /* Establecer una capa superior */
+    left: 0;
+    top: 0;
+    width: 100%; /* Ancho del modal */
+    height: 100%; /* Altura del modal */
+    overflow: auto; /* Habilitar desplazamiento si el contenido del modal es mayor que su altura */
+    background-color: rgb(0,0,0); /* Fondo del modal */
+    background-color: rgba(0,0,0,0.4); /* Transparencia del fondo */
+  }

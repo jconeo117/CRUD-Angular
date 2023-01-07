@@ -1,0 +1,71 @@
+<div class="container mt-5 bg-light">
+    <div class="row">
+        <div class="col-lg-6 offset-lg-3">
+            <div class="card-body text-center">
+                <span class="titulo display-4">listado de categorias</span>
+                <table class="table table-striped mt-5">
+                    <thead>
+                      <tr>
+                        <th scope="col">#id</th>
+                        <th scope="col">nombre</th>
+                        <th scope="col">usuario</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let categoria of categorias">
+                        <th scope="row">{{categoria._id}}</th>
+                        <td>{{categoria.nombre}}</td>
+                        <td>{{categoria.usuario.nombre}}</td>
+                        <td>
+                          <i (click)="openModal(!postMode, categoria._id)" class="fas fa-edit text-primary"></i>
+                          <i class="fas fa-trash text-danger" (click)="isLogged ? deleteCategorie(categoria._id) : openModal(!postMode, categoria._id) "></i>
+                      </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <button class="btn btn-success mb-3" (click)="openModal(postMode,'')">NUEVO</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="showModal && isLogged" class="modal">
+    <div class="row">
+      <div class="col-lg-6 offset-lg-3">
+        <div class="card mt-5">
+          <div class="card-body text-center">
+            <span class="titulo" *ngIf="postMode"> NUEVA CATEGORIA</span>
+            <span class="titulo" *ngIf="!postMode"> EDITAR CATEGORIA</span>
+            <form class="mt-3" [formGroup]="categorieForm" (submit)="onSubmit(form, elementId)">
+              <div class="mb-3">
+                <input type="text" class="form-control form-control-lg" placeholder="nombre" formControlName="nombre" required>
+              </div>
+              
+              <div class="mb-3">
+                <button type="submit" class="btn btn-success btn-lg float-end" *ngIf="postMode">CREAR</button>
+                <button type="submit" class="btn btn-success btn-lg float-end" *ngIf="!postMode">EDITAR</button>
+                <button (click)="closeModal()" class="btn btn-secondary btn-lg float-start">cerrar</button>
+              </div>
+            </form>
+                                
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div *ngIf="showModal && !isLogged" class="modal">
+    <div class="row">
+      <div class="col-lg-6 offset-lg-3">
+        <div class="card mt-5">
+          <div class="card-body text-center">
+            <span class="titulo text-danger"> ERROR</span>
+                <h2>Necesitas logearte para hacer eso</h2>  
+                <button class="btn btn-secondary mb-3" (click)="closeModal()">CERRAR</button>              
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  

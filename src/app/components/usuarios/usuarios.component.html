@@ -1,0 +1,94 @@
+<div class="container mt-5 bg-light">
+    <div class="row">
+        <div class="col-lg-6 offset-lg-3">
+            <div class="card-body text-center">
+                <span class="titulo display-4">listado de usuarios</span>
+                <table class="table table-striped mt-5">
+                    <thead>
+                      <tr>
+                        <th scope="col">#id</th>
+                        <th scope="col">nombre</th>
+                        <th scope="col">correo</th>
+                        <th scope="col">rol</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let usuario of usuarios">
+                        <th scope="row">{{usuario.uid}}</th>
+                        <td>{{usuario.nombre}}</td>
+                        <td>{{usuario.correo}}</td>
+                        <td>{{usuario.rol}}</td>
+                        <td>
+                            <i (click)="openModal(usuario.uid)" class="fas fa-edit text-primary"></i>
+                            <i class="fas fa-trash text-danger" (click)="isLogged ? deleteUsuario(usuario.uid) : openModal(usuario.id)"></i>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="mb-3">
+                    <button routerLink="/" class="btn btn-secondary btn-lg float-start mb-3">VOLVER</button>
+                    <button routerLink="/nuevo-usuario" class="btn btn-success btn-lg float-end mb-3">NUEVO</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="showModal && isLogged" class="modal">
+    <div class="row">
+      <div class="col-lg-6 offset-lg-3">
+        <div class="card mt-5">
+          <div class="card-body text-center">
+            <span class="titulo" > EDITAR USUARIO</span>
+            <form class="mt-3" [formGroup]="usuarioForm" (submit)="onSubmit(form, elementId)">
+                <div class="mb-3">
+                    <input type="text" formControlName="nombre" required class="form-control form-control-lg"
+                        placeholder="nombre">
+                    <div class="text-danger"
+                        *ngIf="usuarioForm.controls['nombre']?.invalid && usuarioForm.controls['nombre']?.touched">
+                        <span>El nombre <strong>es obligatorio</strong></span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <input type="text" formControlName="correo" required class="form-control form-control-lg"
+                        placeholder="correo">
+                    <div class="text-danger"
+                        *ngIf="usuarioForm.controls['correo']?.invalid && usuarioForm.controls['correo']?.touched">
+                        <span>El correo <strong>es obligatorio</strong></span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <input type="password" formControlName="password" required class="form-control form-control-lg"
+                        placeholder="password">
+                    <div class="text-danger"
+                        *ngIf="usuarioForm.controls['password']?.invalid && usuarioForm.controls['password']?.touched">
+                        <span>La contraseña <strong>es obligatoria</strong></span>
+                    </div>
+
+                </div>
+                <div class="mb-3">
+                    <button routerLink="/" class="btn btn-secondary btn-lg float-start">VOLVER</button>
+                    <button type="submit" [disabled]="usuarioForm.invalid" class="btn btn-success btn-lg float-end">ACEPTAR</button>
+                </div>
+            </form>
+                                
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="showModal && !isLogged" class="modal">
+    <div class="row">
+      <div class="col-lg-6 offset-lg-3">
+        <div class="card mt-5">
+          <div class="card-body text-center">
+            <span class="titulo text-danger"> ERROR</span>
+                <h2>Necesitas logearte para hacer eso</h2>  
+                <button class="btn btn-secondary mb-3" (click)="closeModal()">CERRAR</button>              
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
